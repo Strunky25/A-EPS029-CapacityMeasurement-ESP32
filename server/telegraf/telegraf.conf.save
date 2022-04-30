@@ -1,0 +1,11 @@
+[[outputs.influxdb]]
+  urls = ["http://influxdb:8086"]
+
+[[outputs.file]]
+  files = ["stdout", "/afor"]
+
+[[inputs.mqtt_consumer]]
+  servers = ["tcp://mosquitto:1883"]
+  topics = [
+    "bedroom/#"
+  ]
