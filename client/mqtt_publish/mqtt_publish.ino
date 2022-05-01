@@ -1,16 +1,10 @@
 /**
- * A simple Azure IoT example for sending telemetry.
+ * Publish Messages to MQTT Server
  */
 
 #include <WiFi.h>
-//#include "Esp32MQTTClient.h"
 #include <PubSubClient.h>
-
-// Please input the SSID and password of WiFi
-const char* ssid     = "iotuib";
-const char* password = "dvSGnJc32940k23fASF9";
-
-const char* mqtt_server = "172.22.39.7";
+#include "credentials.h"
 
 WiFiClient espClient;
 PubSubClient client(espClient);
