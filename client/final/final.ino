@@ -19,7 +19,7 @@
 
 /* Constants */
 #define BT_DISCOVER_TIME  10000
-#define IDLE_TIME 60000
+#define IDLE_TIME 10000
 
 /* Clients */
 WiFiClient wifiClient;
@@ -90,6 +90,7 @@ int getBTDevices(){
   Serial.println("Discovering Devices...");
   BTScanResults *pResults = SerialBT.discover(BT_DISCOVER_TIME);
   if (pResults)
+    pResults->dump(&Serial);
     return pResults->getCount();
   return -1;
 }
@@ -104,10 +105,11 @@ void loop() {
   if (now - lastMsg > IDLE_TIME) {
     lastMsg = now;
     int nDevices = getBTDevices();
+    char cstr[16];
+    itoa(nDevices, cstr, 10);
     if(nDevices != -1){
-      Serial.print("Publishing message: ");
-      Serial.println(nDevices);
-      client.publish("aforos/", nDevices);
+      Serial.println("Publishing info...");
+      mqttClient.publish("aforos/", cstr);
     } else {
       Serial.println("Error on BT Scan, no result!");
     }
